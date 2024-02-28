@@ -3,14 +3,20 @@
 import sys
 
 def modify_string(string, k):
-    char_dict = {}
-    str_lst = list(string)
-    for i in range(len(str_lst)):
-        c = str_lst[i]
-        if c in char_dict and i - char_dict[c] < k:
-            str_lst[i] = '-'
-        char_dict[c] = i
-    return "".join(str_lst)
+    result = []
+    seen_chars = set()
+
+    for i, char in enumerate(string):
+        if char in seen_chars:
+            result.append('-')
+        else:
+            seen_chars.add(char)
+            result.append(char)
+
+        if i >= k:
+            seen_chars.discard(string[i - k])
+
+    return ''.join(result)
 
 
 if __name__ == "__main__":
